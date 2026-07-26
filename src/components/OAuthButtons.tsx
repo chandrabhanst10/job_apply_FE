@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/authStore";
 
 interface OAuthProvider {
   id: string;
@@ -93,8 +95,42 @@ const providers: OAuthProvider[] = [
 ];
 
 export const OAuthButtons: React.FC = () => {
+  const navigate = useNavigate();
+  const { checkCurrentUser, setAccessToken, setUser } = useAuthStore();
+
+  useEffect(() => {
+    const handleOAuthMessage = async (event: MessageEvent) => {
+      if (event.origin !== window.location.origin) return;
+      if (event.data?.type === "OAUTH_SUCCESS") {
+        const payload = event.data?.payload;
+        if (payload?.accessToken) {
+          setAccessToken(payload.accessToken);
+        }
+        if (payload?.user) {
+          setUser(payload.user);
+        }
+        await checkCurrentUser();
+        navigate("/dashboard");
+      }
+    };
+
+    window.addEventListener("message", handleOAuthMessage);
+    return () => {
+      window.removeEventListener("message", handleOAuthMessage);
+    };
+  }, [navigate, checkCurrentUser, setAccessToken, setUser]);
+
   const handleOAuthClick = (provider: OAuthProvider) => {
-    window.location.href = provider.authUrl;
+    const width = 600;
+    const height = 700;
+    const left = window.screen.width / 2 - width / 2;
+    const top = window.screen.height / 2 - height / 2;
+
+    window.open(
+      provider.authUrl,
+      `oauth_${provider.id}`,
+      `width=${width},height=${height},top=${top},left=${left},scrollbars=yes,status=yes`
+    );
   };
 
   return (

@@ -38,13 +38,27 @@ export const OAuthCallbackView: React.FC = () => {
       }
 
       try {
-        await oauthLogin(provider, code);
+        const res = await oauthLogin(provider, code);
         toast.success(`Successfully signed in using ${provider[0].toUpperCase()}${provider.slice(1)}!`);
-        navigate("/dashboard");
+        
+        if (window.opener) {
+          window.opener.postMessage(
+            { type: "OAUTH_SUCCESS", provider, payload: res?.data },
+            window.location.origin
+          );
+          window.close();
+        } else {
+          navigate("/dashboard");
+        }
       } catch (err: unknown) {
         const apiErr = err as AppError;
         toast.error(apiErr.message || "OAuth login failed. Please try again.");
-        navigate("/login");
+        if (window.opener) {
+          window.opener.postMessage({ type: "OAUTH_ERROR", error: apiErr.message }, window.location.origin);
+          window.close();
+        } else {
+          navigate("/login");
+        }
       }
     };
 
