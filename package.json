@@ -37,5 +37,12 @@
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.59.2",
     "vite": "^8.0.12"
+  },
+  "overrides": {
+    "path-to-regexp": "^0.1.13",
+    "cookie": "^0.7.2",
+    "cross-spawn": "^7.0.6",
+    "ws": "^8.18.0",
+    "nanoid": "^3.3.8"
   }
 }
