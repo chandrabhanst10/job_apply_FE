@@ -50,10 +50,11 @@ export const AdminCompliancePage: React.FC = () => {
   const [auditLogs, setAuditLogs] = useState<AuditLogItem[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchAdminCompliance = useCallback(async () => {
+  const loadAdminCompliance = useCallback(async () => {
+    setLoading(true);
     try {
       const res = await client.get("/compliance/admin/stats");
-      if (res.data.success) {
+      if (res.data?.success) {
         setStats(res.data.data.stats);
         setRequests(res.data.data.recentRequests || []);
         setAuditLogs(res.data.data.recentAuditLogs || []);
@@ -65,14 +66,33 @@ export const AdminCompliancePage: React.FC = () => {
     }
   }, []);
 
-  const handleRefresh = () => {
-    setLoading(true);
-    fetchAdminCompliance();
-  };
-
   useEffect(() => {
-    fetchAdminCompliance();
-  }, [fetchAdminCompliance]);
+    let cancelled = false;
+
+    client
+      .get("/compliance/admin/stats")
+      .then((res) => {
+        if (!cancelled && res.data?.success) {
+          setStats(res.data.data.stats);
+          setRequests(res.data.data.recentRequests || []);
+          setAuditLogs(res.data.data.recentAuditLogs || []);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          toast.error("Failed to load admin compliance statistics.");
+        }
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <div className="space-y-8 font-sans">
@@ -89,7 +109,7 @@ export const AdminCompliancePage: React.FC = () => {
         </div>
 
         <button
-          onClick={handleRefresh}
+          onClick={loadAdminCompliance}
           className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-lg shadow-indigo-600/30"
         >
           <RefreshCw className="h-4 w-4" /> Refresh Audit Metrics

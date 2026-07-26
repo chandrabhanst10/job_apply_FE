@@ -38,10 +38,11 @@ export const TrustCenterPage: React.FC = () => {
   const [exporting, setExporting] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  const fetchSessions = useCallback(async () => {
+  const loadSessions = useCallback(async () => {
+    setLoadingSessions(true);
     try {
       const res = await client.get("/compliance/sessions");
-      if (res.data.success) {
+      if (res.data?.success) {
         setSessions(res.data.data.sessions || []);
       }
     } catch {
@@ -51,24 +52,40 @@ export const TrustCenterPage: React.FC = () => {
     }
   }, []);
 
-  const handleRefreshSessions = () => {
-    setLoadingSessions(true);
-    fetchSessions();
-  };
-
   useEffect(() => {
-    if (isAuthenticated && activeTab === "dashboard") {
-      fetchSessions();
-    }
-  }, [isAuthenticated, activeTab, fetchSessions]);
+    if (!isAuthenticated || activeTab !== "dashboard") return;
+
+    let cancelled = false;
+
+    client
+      .get("/compliance/sessions")
+      .then((res) => {
+        if (!cancelled && res.data?.success) {
+          setSessions(res.data.data.sessions || []);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          toast.error("Failed to load active sessions.");
+        }
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setLoadingSessions(false);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [isAuthenticated, activeTab]);
 
   const handleRevokeSession = async (sessionId: string) => {
     try {
-     
       const res = await client.delete(`/compliance/sessions/${sessionId}`);
       if (res.data.success) {
         toast.success("Session revoked successfully.");
-        fetchSessions();
+        loadSessions();
       }
     } catch {
       toast.error("Failed to revoke session.");
@@ -461,7 +478,7 @@ export const TrustCenterPage: React.FC = () => {
                   </div>
                   {isAuthenticated && (
                     <button
-                      onClick={handleRefreshSessions}
+                      onClick={loadSessions}
                       className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-white flex items-center gap-1.5 transition"
                     >
                       <RefreshCw className="h-3.5 w-3.5" /> Refresh
