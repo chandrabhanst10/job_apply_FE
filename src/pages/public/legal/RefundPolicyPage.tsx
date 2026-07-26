@@ -1,7 +1,7 @@
 import type React from "react";
 import { PublicHeader } from "../../../components/PublicHeader";
 import { PublicFooter } from "../../../components/PublicFooter";
-import { DollarSign, ShieldCheck, RefreshCw } from "lucide-react";
+import { DollarSign } from "lucide-react";
 
 export const RefundPolicyPage: React.FC = () => {
   return (

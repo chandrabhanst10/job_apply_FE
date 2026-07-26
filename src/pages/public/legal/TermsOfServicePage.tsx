@@ -1,7 +1,7 @@
 import type React from "react";
 import { PublicHeader } from "../../../components/PublicHeader";
 import { PublicFooter } from "../../../components/PublicFooter";
-import { FileText, Shield, CheckCircle2, AlertTriangle } from "lucide-react";
+import { FileText } from "lucide-react";
 
 export const TermsOfServicePage: React.FC = () => {
   return (

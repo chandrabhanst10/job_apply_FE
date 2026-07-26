@@ -5,7 +5,6 @@ import {
   Users, 
   Activity, 
   Flag, 
-  FileText, 
   LogOut, 
   ArrowLeft,
   Server

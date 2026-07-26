@@ -1,6 +1,6 @@
 import type React from "react";
 import { Link } from "react-router-dom";
-import { Bot, ShieldCheck, Lock, CheckCircle2, HeartHandshake } from "lucide-react";
+import { Bot, ShieldCheck, Lock } from "lucide-react";
 
 export const PublicFooter: React.FC = () => {
   return (

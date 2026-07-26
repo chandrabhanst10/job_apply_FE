@@ -38,6 +38,7 @@ export const SystemStatusPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchHealth = async () => {
+    setIsLoading(true);
     try {
       const res = await client.get("/health/detailed");
       setHealth(res.data.data);
@@ -79,7 +80,7 @@ export const SystemStatusPage: React.FC = () => {
           </div>
 
           <button onClick={fetchHealth} className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white transition flex items-center gap-1.5 text-xs font-bold">
-            <RefreshCw className="h-3.5 w-3.5" /> Refresh Probes
+            <RefreshCw className={`h-3.5 w-3.5 ${isLoading ? "animate-spin text-indigo-400" : ""}`} /> {isLoading ? "Checking Probes..." : "Refresh Probes"}
           </button>
         </div>
 

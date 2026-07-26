@@ -1,7 +1,7 @@
 import type React from "react";
 import { PublicHeader } from "../../../components/PublicHeader";
 import { PublicFooter } from "../../../components/PublicFooter";
-import { Shield, AlertOctagon, CheckCircle2 } from "lucide-react";
+import { Shield } from "lucide-react";
 
 export const AcceptableUsePolicyPage: React.FC = () => {
   return (

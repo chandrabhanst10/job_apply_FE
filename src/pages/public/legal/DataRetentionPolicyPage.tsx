@@ -1,7 +1,7 @@
 import type React from "react";
 import { PublicHeader } from "../../../components/PublicHeader";
 import { PublicFooter } from "../../../components/PublicFooter";
-import { Clock, Trash2, Database, ShieldCheck } from "lucide-react";
+import { Clock } from "lucide-react";
 
 export const DataRetentionPolicyPage: React.FC = () => {
   return (

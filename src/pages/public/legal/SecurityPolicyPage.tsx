@@ -1,7 +1,7 @@
 import type React from "react";
 import { PublicHeader } from "../../../components/PublicHeader";
 import { PublicFooter } from "../../../components/PublicFooter";
-import { ShieldCheck, Lock, Server, Key, Eye } from "lucide-react";
+import { ShieldCheck, Lock, Server } from "lucide-react";
 
 export const SecurityPolicyPage: React.FC = () => {
   return (

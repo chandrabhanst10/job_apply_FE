@@ -2,7 +2,7 @@ import type React from "react";
 import { useState } from "react";
 import { PublicHeader } from "../../../components/PublicHeader";
 import { PublicFooter } from "../../../components/PublicFooter";
-import { Mail, MessageSquare, ShieldCheck, Send, CheckCircle2, HelpCircle } from "lucide-react";
+import { Mail, MessageSquare, ShieldCheck, Send, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
 
 export const ContactSupportPage: React.FC = () => {

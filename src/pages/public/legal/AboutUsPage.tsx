@@ -1,7 +1,7 @@
 import type React from "react";
 import { PublicHeader } from "../../../components/PublicHeader";
 import { PublicFooter } from "../../../components/PublicFooter";
-import { Bot, ShieldCheck, Zap, HeartHandshake, Award } from "lucide-react";
+import { Bot, ShieldCheck, Zap, HeartHandshake } from "lucide-react";
 
 export const AboutUsPage: React.FC = () => {
   return (

@@ -1,7 +1,7 @@
 import type React from "react";
 import { PublicHeader } from "../../../components/PublicHeader";
 import { PublicFooter } from "../../../components/PublicFooter";
-import { Cookie, ShieldCheck, Lock, CheckCircle2 } from "lucide-react";
+import { Cookie, ShieldCheck, Lock } from "lucide-react";
 
 export const CookiePolicyPage: React.FC = () => {
   return (

@@ -1,7 +1,7 @@
 import type React from "react";
 import { PublicHeader } from "../../../components/PublicHeader";
 import { PublicFooter } from "../../../components/PublicFooter";
-import { Cpu, ShieldCheck, Lock, Sparkles, CheckCircle2 } from "lucide-react";
+import { Cpu, Lock, Sparkles } from "lucide-react";
 
 export const AIUsagePolicyPage: React.FC = () => {
   return (

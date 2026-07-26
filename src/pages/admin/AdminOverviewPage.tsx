@@ -11,11 +11,8 @@ import {
   FileText, 
   Server, 
   Activity, 
-  CheckCircle2, 
-  AlertTriangle, 
   RefreshCw,
-  Layers,
-  Database
+  Layers
 } from "lucide-react";
 
 interface AdminOverviewData {

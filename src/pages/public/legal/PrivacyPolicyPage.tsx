@@ -1,7 +1,7 @@
 import type React from "react";
 import { PublicHeader } from "../../../components/PublicHeader";
 import { PublicFooter } from "../../../components/PublicFooter";
-import { ShieldCheck, FileText, Lock, Eye, Database, Server, RefreshCw } from "lucide-react";
+import { ShieldCheck, Lock, Eye, Database, Server, RefreshCw } from "lucide-react";
 
 export const PrivacyPolicyPage: React.FC = () => {
   return (
